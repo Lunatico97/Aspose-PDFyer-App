@@ -1,0 +1,21 @@
+<div class="converter-container">
+    <h2> {{ title }}</h2>
+    <button class="reset-btn" (click)="reset()">
+      <img src="assets/reset.png">
+    </button>
+    <div class="file-upload">
+      <label for="fileInput" class="custom-file-upload">
+        <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="{{ convertFrom }}">
+        Select {{convertFrom | uppercase}} file
+      </label>
+      <hr/>
+      <span *ngIf="selectedFile" class="file-name"><strong>{{ selectedFile.name }}</strong></span>
+      <button class="preview-btn" *ngIf="download" (click)="previewFile()" [disabled]="!download">
+        <img src="assets/avatar.png">
+      </button>
+    </div>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+    <br>
+    <button class="convert-btn" (click)="onConvertCallback()" [disabled]="!selectedFile || download">Convert</button>&nbsp;
+    <button class="download-btn" *ngIf="download" (click)="downloadFile()">Download {{convertTo | uppercase}}</button>
+</div>

@@ -1,0 +1,61 @@
+<div class="generator-container">
+    <h2>Generate custom PDF</h2>
+    <div class="file-upload">
+      <span> Upload any data </span> <br><br>
+      <label for="fileInput" class="custom-file-upload">
+        <button class="reset-btn" (click)="reset()">
+          <img src="assets/reset.png">
+        </button>
+        <input type="file" id="fileInput" (change)="onFileSelected($event)" accept=".xlsx">
+        Select XLSX File
+      </label>
+      <hr/>
+      <span *ngIf="selectedFile" class="file-name"><strong>{{ selectedFile.name }}</strong></span>
+      <button class="preview-btn" *ngIf="download" (click)="previewFile()" [disabled]="!download">
+        <img src="assets/avatar.png">
+      </button>
+    </div>
+    <button class="convert-btn" (click)="uploadDataFile()" [disabled]="!selectedFile">Upload data file</button>
+    <hr/>
+    <div *ngIf="uploaded" class="invoice-generator">
+        <div class="quality-input">
+            <label for="quality">Title: </label>
+            <input id="quality" type="text" [(ngModel)]="title" placeholder="Diwas Enterprises" required> &nbsp;
+            <label for="quality">Bottom-text: </label>
+            <input id="quality" type="text" [(ngModel)]="footer">
+        </div>
+        <div class="number-input">
+          <label for="quality">Table left margin: </label>
+          <input id="quality" type="number" [(ngModel)]="tableLeftMargin" required> px &nbsp;
+          <label for="quality">Table top margin: </label>
+          <input id="quality" type="number" [(ngModel)]="tableTopMargin" required> px &nbsp;
+          <label for="quality">Table font size: </label>
+          <input id="quality" type="number" [(ngModel)]="tableFontSize" required> pt
+        </div>
+        <div>
+          <h4>Select table headers</h4>
+          <div *ngIf="uploaded && customHeaders && customHeaders.length > 0">
+            <div class="checkbox-grid">
+                <div class="checkbox-item" *ngFor="let header of customHeaders">
+                  <label>
+                    <input type="checkbox" [(ngModel)]="selectedHeaders[header]" /> {{ header }}
+                  </label>
+                </div>
+              </div>
+            </div>
+          <div *ngIf="!(customHeaders && customHeaders.length > 0)">
+            <p>No headers available or failed to load headers.</p>
+          </div>
+        </div>
+        <br>
+        <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+        <br>
+        <button class="convert-btn" (click)="generateCustomPdf()" [disabled]="!title && !uploaded || download">Generate PDF</button>&nbsp;
+        <button class="download-btn" *ngIf="download" (click)="downloadFile()">Download PDF</button>
+    </div>
+</div>
+
+
+
+
+

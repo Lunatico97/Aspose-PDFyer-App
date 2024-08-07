@@ -1,0 +1,35 @@
+<div class="generator-container">
+    <h2>Generate sales invoice</h2>
+    <div class="file-upload">
+      <span> Upload your sales data </span> <br><br>
+      <button class="reset-btn" (click)="reset()">
+        <img src="assets/reset.png">
+      </button>
+      <label for="fileInput" class="custom-file-upload">
+        <input type="file" id="fileInput" (change)="onFileSelected($event)" accept=".xlsx">
+        Select XLSX File
+      </label>
+      <hr/>
+      <span *ngIf="selectedFile" class="file-name"><strong>{{ selectedFile.name }}</strong></span>
+      <button class="preview-btn" *ngIf="download" (click)="previewFile()" [disabled]="!download">
+        <img src="assets/avatar.png">
+      </button>
+    </div>
+    
+    <button class="convert-btn" (click)="uploadDataFile()" [disabled]="!selectedFile">Upload data file</button>
+    <hr/>
+    <div *ngIf="uploaded" class="invoice-generator">
+        <div class="quality-input">
+            <label for="quality">Input city: </label>
+            <input id="quality" type="text" [(ngModel)]="inputCity">
+        </div>
+        <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+        <br>
+        <button class="convert-btn" (click)="generatePdf()" [disabled]="!uploaded || download">Generate invoice PDF</button>&nbsp;
+        <button class="download-btn" *ngIf="download" (click)="downloadFile()">Download invoice</button>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,25 @@
+<div class="generator-container">
+    <button class="reset-btn" (click)="reset()">
+        <img src="assets/reset.png">
+    </button>
+    <button class="preview-btn" *ngIf="download" (click)="previewFile()" [disabled]="!download"> 
+        <img src="assets/avatar.png"> 
+    </button>
+    <h2>Generate match card</h2>
+    <img id="wwe-logo" src="assets/wwe.png">
+    <div class="card-generator">
+        <div class="quality-input">
+            <label for="quality">Input wrestler name </label><br>
+            <input id="quality" type="text" [(ngModel)]="wrestler1">
+        </div>
+        <div class="quality-input">
+            <label for="quality">Input his opponent </label><br>
+            <input id="quality" type="text" [(ngModel)]="wrestler2">
+        </div>
+        <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+        <br>
+        <button class="convert-btn" (click)="generateMatchCard()" [disabled]="!wrestler1 || !wrestler2 || download">Generate card</button>&nbsp;
+        <button class="download-btn" *ngIf="download" (click)="downloadFile()">Download card</button>
+    </div>
+  </div>
+  

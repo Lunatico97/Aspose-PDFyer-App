@@ -1,0 +1,6 @@
+@AsposeTriage_HostAddress = http://localhost:5241
+
+GET {{AsposeTriage_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

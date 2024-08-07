@@ -1,0 +1,31 @@
+<div class="converter-container">
+    <h2>PDF Comparator</h2>
+    <div class="file-upload">
+      <input type="file" id="fileInput" (change)="onFile1Selected($event)" accept=".pdf">
+      <label for="fileInput" class="custom-file-upload">
+        Select 1st PDF File
+      </label>
+      <hr/>
+      <input type="file" id="fileInput" (change)="onFile2Selected($event)" accept=".pdf">
+      <label for="fileInput" class="custom-file-upload">
+        Select 2nd PDF File
+      </label>
+      <hr/>
+      <span *ngIf="selectedFile1 && selectedFile2" class="file-name"><strong>PDF1: {{ selectedFile1.name }} | </strong></span>
+      <span *ngIf="selectedFile1 && selectedFile2" class="file-name"><strong>PDF2: {{ selectedFile2.name}}</strong></span>
+      <button class="reset-btn" (click)="reset()">
+        <img src="assets/reset.png">
+      </button>
+    </div>
+    <input type="radio" name="options" [(ngModel)]="asposeWay" [value]="true"> Aspose
+    <input type="radio" name="options" [(ngModel)]="asposeWay" [value]="false"> Custom
+    <button class="preview-btn" *ngIf="download" (click)="previewFile()" [disabled]="!download">
+      <img src="assets/avatar.png">
+    </button>
+    <br><br>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+    <br>
+    <button class="convert-btn" (click)="comparePdfs()" [disabled]="!selectedFile1 || !selectedFile2 || download">Compare PDFs</button>&nbsp;
+    <button class="download-btn" *ngIf="download" (click)="downloadFile()">Download comparison PDF</button>
+</div>
+

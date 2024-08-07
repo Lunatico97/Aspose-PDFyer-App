@@ -1,0 +1,91 @@
+.generator-container {
+    max-width: 400px;
+    min-width: 300px;
+    margin: auto;
+    padding: 20px;
+    background-color:#fcdcc1;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .file-upload {
+    margin-bottom: 20px;
+  }
+  
+  .file-name {
+    display: inline-block;
+    margin-left: 10px;
+  }
+  
+  .quality-input {
+    margin-bottom: 20px;
+  }
+  
+  .convert-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .download-btn{
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  
+  .convert-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .preview-btn{
+    float:right;
+  }
+
+  .preview-btn img{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  .reset-btn{
+    float: right;
+    border: none;
+    background-color: transparent;
+  }
+  
+  .reset-btn img{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  #wwe-logo{
+    width: 50px;
+    height: 50px; 
+    //transform-style: preserve-3d;
+    transform: rotateY(0deg); 
+    animation: rotate 5s linear infinite;
+  }
+
+.generator-container:hover #wwe-logo {
+  transform: rotateY(180deg); 
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateY(0deg);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}

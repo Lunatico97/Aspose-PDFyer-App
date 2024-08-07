@@ -1,0 +1,23 @@
+<div class="doc-converter">
+    <div class="converter-item">
+        <app-converter [title]="'PDF2Word Converter'" [convertEndpoint]="convertPdfToWordEndpoint" 
+                       [successMessage]="'Successfully converted to word file !'" [convertFrom]="'.pdf'" [convertTo]="'.docx'">
+        </app-converter>
+    </div>
+    <div class="converter-item">
+        <app-converter [title]="'Word2PDF Converter'" [convertEndpoint]="convertWordToPdfEndpoint" 
+                       [successMessage]="'Successfully converted to PDF file !'" [convertFrom]="'.docx'" [convertTo]="'.pdf'">
+        </app-converter>
+    </div>
+    <div class="converter-item">
+        <app-converter [title]="'Excel2PDF Converter'" [convertEndpoint]="convertXlsxToPdfEndpoint" 
+                       [successMessage]="'Successfully converted to PDF file !'" [convertFrom]="'.xlsx'" [convertTo]="'.pdf'">
+        </app-converter>
+    </div>
+    <div class="converter-item">
+        <app-converter [title]="'Excel2Word Converter'" [convertEndpoint]="convertXlsxToWordEndpoint" 
+                       [successMessage]="'Successfully converted to word file !'" [convertFrom]="'.xlsx'" [convertTo]="'.docx'">
+        </app-converter>
+    </div>
+    <!-- Add more converter items as needed -->
+</div>

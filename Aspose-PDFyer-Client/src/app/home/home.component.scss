@@ -1,0 +1,31 @@
+.home-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+}
+
+.powered-by {
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+    float: right;
+    color: red;
+}
+
+.how-to-container{
+    padding: 20px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    border: 1px solid black;
+    border-radius: 5px;
+    font-size: 12pt;
+}
+
+.how-to-container h1, p{
+    text-align: center;
+}
+
+mat-progress-bar{
+    width: 500px !important;
+}

@@ -1,0 +1,38 @@
+<div class="generator-container">
+    <h2>Find & Replace</h2>
+    <div class="file-upload">
+      <button class="reset-btn" (click)="reset()">
+        <img src="assets/reset.png">
+      </button>
+        <label for="fileInput" class="custom-file-upload">
+          <input type="file" id="fileInput" (change)="onFileSelected($event)" accept=".pdf">
+          Select PDF File
+        </label>
+        <hr/>
+        <span *ngIf="selectedFile" class="file-name"><strong>{{ selectedFile.name }}</strong></span>
+        <button class="preview-btn" *ngIf="download" (click)="previewFile()" [disabled]="!download">
+          <img src="assets/avatar.png">
+        </button>
+      </div>
+    <div class="card-generator">
+        <div class="text-input">
+            <label for="findText">Find text: </label> &nbsp; &nbsp;
+            <input id="findText" type="text" [(ngModel)]="findText">
+        </div>
+        <div class="text-input">
+            <label for="replaceText">Replace text: </label>
+            <input id="replaceText" type="text" [(ngModel)]="replaceText">
+        </div>
+        <div>
+        <input type="radio" name="replace-options" [(ngModel)]="exactReplacement" [value]="true"> Exact Replacement
+        <input type="radio" name="replace-options" [(ngModel)]="exactReplacement" [value]="false"> Substring Replacement
+        </div>
+        <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+        <br>
+        <button class="convert-btn" (click)="findAndReplace()" [disabled]="!findText || !replaceText || download">Generate new PDF</button>&nbsp;
+        <button class="download-btn" *ngIf="download" (click)="downloadFile()">Download PDF</button>
+    </div>
+  </div>
+
+  
+

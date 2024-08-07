@@ -1,0 +1,92 @@
+.generator-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .file-upload {
+    margin-bottom: 20px;
+  }
+  
+  .file-name {
+    display: inline-block;
+    margin-left: 10px;
+  }
+  
+  .quality-input {
+    margin-bottom: 20px;
+  }
+
+  .number-input input{
+    width: 40px;
+    margin-bottom: 20px;
+  }
+  
+  .convert-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .download-btn{
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  
+  .convert-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+
+  .preview-btn{
+    float:right;
+  }
+
+  .preview-btn img{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
+
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjust column width as needed */
+    gap: 10px; /* Adjust the gap between items as needed */
+  }
+  
+  .checkbox-item {
+    display: flex;
+    align-items: center; /* Align items vertically */
+  }
+  
+  .checkbox-item label {
+    margin-left: 5px; /* Adjust spacing between checkbox and label */
+    white-space: nowrap; /* Prevent label text from wrapping */
+    overflow: hidden; /* Hide text overflow */
+    text-overflow: ellipsis; /* Show ellipsis (...) for long texts */
+  }
+
+  .reset-btn{
+    float: right;
+    border: none;
+    background-color: transparent;
+  }
+  
+  .reset-btn img{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }

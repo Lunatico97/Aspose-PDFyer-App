@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Wrestlers>
+	<Raw>
+		<Wrestler>
+			<Name>John Cena</Name>
+			<Finisher>FU</Finisher>
+		</Wrestler>
+		<Wrestler>
+			<Name>Randy Orton</Name>
+			<Finisher>RKO</Finisher>
+		</Wrestler>
+		<Wrestler>
+			<Name>Triple H</Name>
+			<Finisher>Pedigree</Finisher>
+		</Wrestler>
+		<Wrestler>
+			<Name>Kane</Name>
+			<Finisher>Chokeslam</Finisher>
+		</Wrestler>
+		<Wrestler>
+			<Name>Shawn Michaels</Name>
+			<Finisher>Sweet Chin Music</Finisher>
+		</Wrestler>
+	</Raw>
+	<Smackdown>
+		<Wrestler>
+			<Name>Edge</Name>
+			<Finisher>Spear</Finisher>
+		</Wrestler>
+		<Wrestler>
+			<Name>Rey Mysterio</Name>
+			<Finisher>619</Finisher>
+		</Wrestler>
+		<Wrestler>
+			<Name>Batista</Name>
+			<Finisher>Batista Bomb</Finisher>
+		</Wrestler>
+		<Wrestler>
+			<Name>JBL</Name>
+			<Finisher>Clothesline From Hell</Finisher>
+		</Wrestler>
+		<Wrestler>
+			<Name>Undertaker</Name>
+			<Finisher>Tombstone Piledriver</Finisher>
+		</Wrestler>
+	</Smackdown>
+</Wrestlers>
