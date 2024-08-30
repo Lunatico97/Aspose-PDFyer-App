@@ -11,7 +11,7 @@ namespace AsposeTriage.Controllers
     [ApiController]
     public class CustomController : Controller
     {
-        private CustomCreator _customCreator;
+        private readonly CustomCreator _customCreator;
         public CustomController(IPDFGenerator generator)
         {
             _customCreator = new CustomCreator(generator);

@@ -15,9 +15,8 @@ namespace AsposeTriage.Services
         private readonly IPDFGenerator _generator;
         private string? selectedCity;
         private double totalSales = 0;
-        private int vatPercent = 13;
+        private readonly int vatPercent = 13;
         private double grandTotal;
-        private List<Sales> _filteredSales = new List<Sales>();
         private List<string> _cities = new List<string>();
         List<string[]> tabularData = new List<string[]>();
         private readonly string[] requiredHeaders = { "ID", "Date", "Region", "City", "Category", "Product", "Quantity", "UnitPrice", "TotalPrice" };
@@ -70,8 +69,9 @@ namespace AsposeTriage.Services
 
         public void CreateBill(string filename, string location)
         {
+            List<Sales> _filteredSales;
             List<Sales> sales = this.GetSalesData(filename);
-            selectedCity = _cities.FirstOrDefault(c => c.Equals(location, StringComparison.OrdinalIgnoreCase));
+            selectedCity = _cities.Find(c => c.Equals(location, StringComparison.OrdinalIgnoreCase));
             if (selectedCity == null) throw new Exception(Messages.LocationNotAssociatedToSupplier);
             _filteredSales = sales.Where(s => s.City.Equals(location, StringComparison.OrdinalIgnoreCase))
                                   .GroupBy(t => t.Product)

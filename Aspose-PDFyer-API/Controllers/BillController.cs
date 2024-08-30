@@ -9,7 +9,7 @@ namespace AsposeTriage.Controllers
     [ApiController]
     public class BillController : Controller
     {
-        private BillCreator _billCreator;
+        private readonly BillCreator _billCreator;
         public BillController(IPDFGenerator generator) {
             _billCreator = new BillCreator(generator);
         }
@@ -48,7 +48,7 @@ namespace AsposeTriage.Controllers
 
         [HttpPost]
         [Route(Routes.ComparePDFCustom)]
-        public ActionResult Post(IFormFile pdf1, IFormFile pdf2)
+        public ActionResult ComparePDFs(IFormFile pdf1, IFormFile pdf2)
         {
             if (pdf1 == null || pdf2 == null)
             {
@@ -68,7 +68,7 @@ namespace AsposeTriage.Controllers
 
         [HttpPost]
         [Route(Routes.ComparePDFAspose)]
-        public ActionResult PostAspose(IFormFile pdf1, IFormFile pdf2)
+        public ActionResult ComparePDFsAspose(IFormFile pdf1, IFormFile pdf2)
         {
             if (pdf1 == null || pdf2 == null)
             {

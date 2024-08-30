@@ -26,7 +26,7 @@ namespace AsposeTriage.Services
         {
             if(custom != null) {
                 this._customData = custom;
-                if (custom.Headers.Count() == 0)
+                if (custom.Headers.Any())
                 {
                     headerRow = SheetManipulator.GetHeadersFromExcel(custom.Filename, 0).ToArray();
                     dataRows = SheetManipulator.GetRowsFromExcel(custom.Filename, 0);

@@ -16,9 +16,15 @@ namespace AsposeTriage.Controllers
             {
                 return BadRequest(Messages.FileRequired);
             }
-
-            var pdfBytes = Converter.ConvertWordToPdf(file);
-            return File(pdfBytes, MimeTypes.PDF, $"{Path.GetFileNameWithoutExtension(file.FileName)}.pdf");
+            try
+            {
+                var pdfBytes = Converter.ConvertWordToPdf(file);
+                return File(pdfBytes, MimeTypes.PDF, $"{Path.GetFileNameWithoutExtension(file.FileName)}.pdf");
+            }
+            catch (Exception exception)
+            {
+                return Json(new { success = false, message = $"{exception.Message}" });
+            }
         }
 
         [HttpPost(Routes.PDF2Word)]
@@ -28,9 +34,15 @@ namespace AsposeTriage.Controllers
             {
                 return BadRequest(Messages.FileRequired);
             }
-
-            var docxBytes = Converter.ConvertPdfToWord(file);
-            return File(docxBytes, MimeTypes.DOCX, $"{Path.GetFileNameWithoutExtension(file.FileName)}.docx");
+            try
+            {
+                var docxBytes = Converter.ConvertPdfToWord(file);
+                return File(docxBytes, MimeTypes.DOCX, $"{Path.GetFileNameWithoutExtension(file.FileName)}.docx");
+            }
+            catch (Exception exception)
+            {
+                return Json(new { success = false, message = $"{exception.Message}" });
+            }
         }
 
         [HttpPost(Routes.Excel2Word)]
@@ -40,9 +52,15 @@ namespace AsposeTriage.Controllers
             {
                 return BadRequest(Messages.FileRequired);
             }
-
-            var pdfBytes = Converter.ConvertExcelOrCsvToWord(file);
-            return File(pdfBytes, MimeTypes.DOCX, $"{Path.GetFileNameWithoutExtension(file.FileName)}.docx");
+            try
+            {
+                var pdfBytes = Converter.ConvertExcelOrCsvToWord(file);
+                return File(pdfBytes, MimeTypes.DOCX, $"{Path.GetFileNameWithoutExtension(file.FileName)}.docx");
+            }
+            catch (Exception exception)
+            {
+                return Json(new { success = false, message = $"{exception.Message}" });
+            }
         }
 
         [HttpPost(Routes.Excel2PDF)]
@@ -52,9 +70,15 @@ namespace AsposeTriage.Controllers
             {
                 return BadRequest(Messages.FileRequired);
             }
-
-            var pdfBytes = Converter.ConvertExcelOrCsvToPdf(file);
-            return File(pdfBytes, MimeTypes.PDF, $"{Path.GetFileNameWithoutExtension(file.FileName)}.pdf");
+            try
+            {
+                var pdfBytes = Converter.ConvertExcelOrCsvToPdf(file);
+                return File(pdfBytes, MimeTypes.PDF, $"{Path.GetFileNameWithoutExtension(file.FileName)}.pdf");
+            }
+            catch (Exception exception)
+            {
+                return Json(new { success = false, message = $"{exception.Message}" });
+            }
         }
 
         [HttpPost(Routes.FindAndReplace)]
@@ -64,9 +88,15 @@ namespace AsposeTriage.Controllers
             {
                 return BadRequest(Messages.FileRequired);
             }
-
-            var pdfBytes = Converter.FindAndReplaceInPdf(file, findText, replaceText, exactReplacementFlag);
-            return File(pdfBytes, MimeTypes.PDF, $"{Path.GetFileNameWithoutExtension(file.FileName)}.pdf");
+            try
+            {
+                var pdfBytes = Converter.FindAndReplaceInPdf(file, findText, replaceText, exactReplacementFlag);
+                return File(pdfBytes, MimeTypes.PDF, $"{Path.GetFileNameWithoutExtension(file.FileName)}.pdf");
+            }
+            catch (Exception exception)
+            {
+                return Json(new { success = false, message = $"{exception.Message}" });
+            }
         }
 
         [HttpPost(Routes.Encrypt)]
@@ -76,9 +106,15 @@ namespace AsposeTriage.Controllers
             {
                 return BadRequest(Messages.FileRequired);
             }
-
-            var pdfBytes = Optimizer.EncryptPDF(file, ownerPwd, userPwd);
-            return File(pdfBytes, MimeTypes.PDF, $"{Path.GetFileNameWithoutExtension(file.FileName)}_Encrypted.pdf");
+            try
+            {
+                var pdfBytes = Optimizer.EncryptPDF(file, ownerPwd, userPwd);
+                return File(pdfBytes, MimeTypes.PDF, $"{Path.GetFileNameWithoutExtension(file.FileName)}_Encrypted.pdf");
+            }
+            catch (Exception exception)
+            {
+                return Json(new { success = false, message = $"{exception.Message}" });
+            }    
         }
 
         [HttpPost(Routes.Compress)]
@@ -88,9 +124,15 @@ namespace AsposeTriage.Controllers
             {
                 return BadRequest(Messages.FileRequired);
             }
-
-            var pdfBytes = Optimizer.CompressPDF(file, imageQuality);
-            return File(pdfBytes, MimeTypes.PDF, $"{Path.GetFileNameWithoutExtension(file.FileName)}_Compressed.pdf");
+            try
+            {
+                var pdfBytes = Optimizer.CompressPDF(file, imageQuality);
+                return File(pdfBytes, MimeTypes.PDF, $"{Path.GetFileNameWithoutExtension(file.FileName)}_Compressed.pdf");
+            }
+            catch (Exception exception)
+            {
+                return Json(new { success = false, message = $"{exception.Message}" });
+            }
         }
 
         [HttpPost(Routes.Merge)]
@@ -106,8 +148,15 @@ namespace AsposeTriage.Controllers
             }
             else
             {
-                var pdfBytes = DocumentComparator.MergeDocuments(files);
-                return File(pdfBytes, MimeTypes.PDF, $"{Path.GetFileNameWithoutExtension(files[0].FileName)}_Merged.pdf");
+                try
+                {
+                    var pdfBytes = DocumentComparator.MergeDocuments(files);
+                    return File(pdfBytes, MimeTypes.PDF, $"{Path.GetFileNameWithoutExtension(files[0].FileName)}_Merged.pdf");
+                }
+                catch (Exception exception)
+                {
+                    return Json(new { success = false, message = $"{exception.Message}" });
+                }
             }
         }
     }

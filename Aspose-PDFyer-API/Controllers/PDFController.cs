@@ -10,18 +10,14 @@ namespace AsposeTriage.Controllers
     [Route("api/[controller]")]
     public class PDFController : Controller
     {
-        private readonly ILogger<PDFController> _logger;
-
-        public PDFController(ILogger<PDFController> logger)
-        {
-            _logger = logger;
-        }
+        public PDFController()
+        {}
 
         [HttpPost]
         [Route(Routes.ParseTableFromPDF)]
         public ActionResult Get(IFormFile file)
         {
-            List<string[]> result = new List<string[]>();
+            List<string[]> result;
             if(file == null) return Json(new { success = false, message = Messages.FileRequired });
             try
             {

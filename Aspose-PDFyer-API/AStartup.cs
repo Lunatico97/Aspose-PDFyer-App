@@ -4,13 +4,6 @@ namespace AsposeTriage
 {
     public class AStartup
     {
-        private readonly IConfiguration _config;
-
-        public AStartup(IConfiguration config)
-        {
-            _config = config;
-        }
-
         public void ConfigureServices(IServiceCollection services)
         {
             // Add services to the container.
@@ -28,6 +21,7 @@ namespace AsposeTriage
                 });
             }
             );
+            services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
