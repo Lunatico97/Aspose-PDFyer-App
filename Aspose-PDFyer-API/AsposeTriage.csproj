@@ -6,10 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
-#    <ContainerImageName>aspose-triage-api</ContainerImageName>
-#    <ContainerImageTags>latest</ContainerImageTags>
-#    <PublishProfile>DefaultContainer</PublishProfile>
-#    <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+    <ContainerImageName>aspose-triage-api</ContainerImageName>
   </PropertyGroup>
 
   <ItemGroup>
