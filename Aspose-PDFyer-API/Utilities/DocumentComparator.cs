@@ -1,6 +1,5 @@
 ﻿using Aspose.Words;
 using DiffMatchPatch;
-using System.Diagnostics.Contracts;
 
 namespace AsposeTriage.Utilities
 {

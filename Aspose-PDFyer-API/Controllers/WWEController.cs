@@ -1,8 +1,5 @@
-﻿using Aspose.Pdf;
-using AsposeTriage.Models;
-using AsposeTriage.Services;
+﻿using AsposeTriage.Services;
 using AsposeTriage.Utilities;
-using AsposeTriage.Structures;
 using Microsoft.AspNetCore.Mvc;
 using AsposeTriage.Common;
 

@@ -1,12 +1,8 @@
-﻿using Aspose.Cells;
-using Aspose.Pdf;
-using Aspose.Pdf.Text;
+﻿using Aspose.Pdf.Text;
 using AsposeTriage.Common;
 using AsposeTriage.Models;
 using AsposeTriage.Structures;
 using AsposeTriage.Utilities;
-using System.Drawing;
-using System.Reflection.PortableExecutable;
 using Color = Aspose.Pdf.Color;
 
 namespace AsposeTriage.Services

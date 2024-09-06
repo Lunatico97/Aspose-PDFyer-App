@@ -1,7 +1,5 @@
 ﻿using Aspose.Cells;
 using Aspose.Pdf.Text;
-using Aspose.Words;
-using Aspose.Words.Pdf2Word.FixedFormats;
 using System.Text.RegularExpressions;
 
 namespace AsposeTriage.Utilities

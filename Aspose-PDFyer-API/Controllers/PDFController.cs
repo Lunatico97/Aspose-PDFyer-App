@@ -2,7 +2,6 @@ using AsposeTriage.Common;
 using AsposeTriage.Models;
 using AsposeTriage.Utilities;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace AsposeTriage.Controllers
 {

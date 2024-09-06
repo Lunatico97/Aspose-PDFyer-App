@@ -1,8 +1,4 @@
 ﻿using Aspose.Pdf;
-using Aspose.Pdf.Facades;
-using Aspose.Words.Pdf2Word.FixedFormats;
-using Aspose.Words.Saving;
-using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 
 namespace AsposeTriage.Utilities
 {

@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace AsposeTriage.Models
+﻿namespace AsposeTriage.Models
 {
     public class Sales
     {

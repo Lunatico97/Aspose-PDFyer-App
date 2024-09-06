@@ -3,7 +3,6 @@ using Aspose.Pdf;
 using Aspose.Pdf.Text;
 using AsposeTriage.Structures;
 using AsposeTriage.Models;
-using Microsoft.AspNetCore.Mvc;
 using AsposeTriage.Utilities;
 using AsposeTriage.Common;
 

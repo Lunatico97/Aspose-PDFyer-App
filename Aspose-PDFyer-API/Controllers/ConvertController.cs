@@ -1,6 +1,5 @@
 ﻿using AsposeTriage.Common;
 using AsposeTriage.Utilities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AsposeTriage.Controllers
