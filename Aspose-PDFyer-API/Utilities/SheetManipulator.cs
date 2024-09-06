@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace AsposeTriage.Utilities
 {
-    public class SheetManipulator
+    public static class SheetManipulator
     {
         private static readonly string _dataDir = "Output";
         public static void GeneratePDFUsingSheet(string inSheetName, string outFilename)

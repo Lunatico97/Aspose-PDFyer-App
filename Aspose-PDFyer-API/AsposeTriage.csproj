@@ -22,7 +22,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Output\" />
+      <Folder Include="Output\" />
+	  <Content Include="Uploads\**\*">
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	  <Content Include="Output\**\*">
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
+	  <Content Include="Input\**\*">
+		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+	  </Content>
   </ItemGroup>
 
 </Project>

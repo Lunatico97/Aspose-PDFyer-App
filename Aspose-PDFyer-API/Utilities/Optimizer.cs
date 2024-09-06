@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 
 namespace AsposeTriage.Utilities
 {
-    public class Optimizer
+    public static class Optimizer
     {
         public static byte[] CompressPDF(IFormFile formFile, int imgQuality = 50)
         {
