@@ -3,6 +3,7 @@ using Aspose.Pdf.Text;
 using AsposeTriage.Structures;
 using AsposeTriage.Common;
 using System.Reflection.PortableExecutable;
+using AsposeTriage.Services.Interfaces;
 
 namespace AsposeTriage.Services
 {

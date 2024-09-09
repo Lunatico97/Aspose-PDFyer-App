@@ -5,10 +5,11 @@ using AsposeTriage.Structures;
 using AsposeTriage.Models;
 using AsposeTriage.Utilities;
 using AsposeTriage.Common;
+using AsposeTriage.Services.Interfaces;
 
-namespace AsposeTriage.Services
+namespace AsposeTriage.Services.Creators
 {
-    
+
     public class BillCreator
     {
         private readonly IPDFGenerator _generator;
@@ -69,7 +70,7 @@ namespace AsposeTriage.Services
         public void CreateBill(string filename, string location)
         {
             List<Sales> _filteredSales;
-            List<Sales> sales = this.GetSalesData(filename);
+            List<Sales> sales = GetSalesData(filename);
             selectedCity = _cities.Find(c => c.Equals(location, StringComparison.OrdinalIgnoreCase));
             if (selectedCity == null) throw new Exception(Messages.LocationNotAssociatedToSupplier);
             _filteredSales = sales.Where(s => s.City.Equals(location, StringComparison.OrdinalIgnoreCase))
@@ -82,9 +83,9 @@ namespace AsposeTriage.Services
                                       UnitPrice = g.First().UnitPrice,
                                       TotalPrice = g.Sum(a => a.TotalPrice),
 
-                                  }).OrderBy(r => r.Product).ToList();           
+                                  }).OrderBy(r => r.Product).ToList();
             totalSales = _filteredSales.Sum(f => f.TotalPrice);
-            grandTotal = totalSales + ((float)vatPercent/100) * totalSales;
+            grandTotal = totalSales + (float)vatPercent / 100 * totalSales;
             foreach (Sales s in _filteredSales)
             {
                 tabularData.Add(new[]
@@ -110,8 +111,10 @@ namespace AsposeTriage.Services
             _generator.SetForegroundColor(Color.Brown);
             _generator.CreateHeader(new Header
             {
-                Font = Fonts.TimesNewRoman, Title = "Potato - Potata; We got it covered !",
-                FontSize = 12, Top = 20
+                Font = Fonts.TimesNewRoman,
+                Title = "Potato - Potata; We got it covered !",
+                FontSize = 12,
+                Top = 20
             }, FontStyles.Italic);
             _generator.CreateImage(new PDFImage($"{Defaults.ResourceDirectory}/{Defaults.InvoicePath}/{Defaults.ImagePath}/{Defaults.BillLogoFile}", 50, 775, 50, 50));
             #endregion

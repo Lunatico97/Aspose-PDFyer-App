@@ -1,4 +1,5 @@
 ﻿using AsposeTriage.Services;
+using AsposeTriage.Services.Interfaces;
 
 namespace AsposeTriage
 {
@@ -9,6 +10,7 @@ namespace AsposeTriage
             // Add services to the container.
             services.AddControllers();
             services.AddTransient<IPDFGenerator, PDFGenerator>();
+            services.AddSingleton<IS3Service, S3Service>();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddCors(options =>

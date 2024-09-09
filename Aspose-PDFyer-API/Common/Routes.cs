@@ -22,6 +22,9 @@
         // File routes
         public const string FileUpload = "upload";
         public const string FileDownload = "download";
+        // S3 routes
+        public const string S3FileUpload = "upload-s3";
+        public const string S3FileDownload = "download-s3";
         // WWE routes
         public const string GenerateRoster = "generateRoster";
         public const string GenerateMatchCard = "generateCard";

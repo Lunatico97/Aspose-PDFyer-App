@@ -2,11 +2,12 @@
 using Aspose.Words.Fonts;
 using AsposeTriage.Common;
 using AsposeTriage.Models;
+using AsposeTriage.Services.Interfaces;
 using AsposeTriage.Structures;
 using AsposeTriage.Utilities;
 using Color = Aspose.Pdf.Color;
 
-namespace AsposeTriage.Services
+namespace AsposeTriage.Services.Creators
 {
     public class CustomCreator
     {
@@ -21,8 +22,9 @@ namespace AsposeTriage.Services
 
         public void CreateCustom(CustomDAO custom)
         {
-            if(custom != null) {
-                this._customData = custom;
+            if (custom != null)
+            {
+                _customData = custom;
                 if (custom.Headers.Any())
                 {
                     headerRow = SheetManipulator.GetHeadersFromExcel(custom.Filename, 0).ToArray();
