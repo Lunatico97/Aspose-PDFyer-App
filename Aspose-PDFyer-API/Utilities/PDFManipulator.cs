@@ -1,6 +1,8 @@
 ﻿using Aspose.Pdf;
 // This loads general element objects like document, page and rectangle.
 using Aspose.Pdf.Text;
+using AsposeTriage.Common;
+
 // This loads specific text-associated document elements like TextFragment, header, fonts, etc...
 using AsposeTriage.Models;
 using AsposeTriage.Structures;
@@ -9,7 +11,6 @@ namespace AsposeTriage.Utilities
 {
     public static class PDFManipulator
     {
-        private static readonly string _dataDir = "Output";
         public static void Generate(Header iheader, Content icontent, string filename)
         {
             Document document = new Document();
@@ -62,7 +63,7 @@ namespace AsposeTriage.Utilities
                 
             }
             // Save updated PDF
-            var outputFileName = System.IO.Path.Combine(_dataDir, $"{filename}.pdf");
+            var outputFileName = System.IO.Path.Combine(Defaults.DispatchDirectory, $"{filename}.pdf");
             document.Save(outputFileName);
         }
 
@@ -101,13 +102,13 @@ namespace AsposeTriage.Utilities
             Document document = new Document();
             try
             {
-                document.BindXml($"{inXML}.xml", $"{inXML}.xslt");
+                document.BindXml($"{Defaults.UploadDirectory}/{inXML}.xml", $"{Defaults.UploadDirectory}/{inXML}.xslt");
             }
             catch(Exception exception)
             {
                 throw new Exception(exception.Message);
             }
-            var outputFileName = System.IO.Path.Combine(_dataDir, $"{filename}.pdf");
+            var outputFileName = System.IO.Path.Combine(Defaults.DispatchDirectory, $"{filename}.pdf");
             document.Save(outputFileName);
         }
 

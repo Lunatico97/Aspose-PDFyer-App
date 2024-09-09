@@ -1,21 +1,21 @@
 ﻿using Aspose.Cells;
+using AsposeTriage.Common;
 
 namespace AsposeTriage.Utilities
 {
     public static class SheetManipulator
     {
-        private static readonly string _dataDir = "Output";
         public static void GeneratePDFUsingSheet(string inSheetName, string outFilename)
         {
-            Workbook sheets = new Workbook($"Uploads/{inSheetName}.xlsx");
-            var outputFileName = System.IO.Path.Combine(_dataDir, $"{outFilename}.pdf");
+            Workbook sheets = new Workbook($"{Defaults.UploadDirectory}/{inSheetName}.xlsx");
+            var outputFileName = System.IO.Path.Combine(Defaults.DispatchDirectory, $"{outFilename}.pdf");
             sheets.Save(outputFileName, Aspose.Cells.SaveFormat.Pdf);
         }
 
         public static List<string> GetHeadersFromExcel(string sheetName, int sheetNum)
         {
             List<string> headers = new List<string>();
-            Workbook sheets = new Workbook($"Uploads/{sheetName}");
+            Workbook sheets = new Workbook($"{Defaults.UploadDirectory}/{sheetName}");
             Worksheet worksheet = sheets.Worksheets[sheetNum];
             for(int col=0; col <= worksheet.Cells.MaxDataColumn; col++) 
             {
@@ -27,7 +27,7 @@ namespace AsposeTriage.Utilities
 
         public static List<string[]> GetRowsFromExcel(string sheetName, int sheetNum)
         {
-            Workbook sheets = new Workbook($"Uploads/{sheetName}");
+            Workbook sheets = new Workbook($"{Defaults.UploadDirectory}/{sheetName}");
             Worksheet worksheet = sheets.Worksheets[sheetNum];
             List<string[]> rows = new List<string[]>();
             Aspose.Cells.Cells cells = worksheet.Cells;
@@ -46,7 +46,7 @@ namespace AsposeTriage.Utilities
 
         public static List<string[]> GetSpecificRowsFromExcel(string sheetName, int sheetNum, string[] headers)
         {
-            Workbook sheets = new Workbook($"Uploads/{sheetName}");
+            Workbook sheets = new Workbook($"{Defaults.UploadDirectory}/{sheetName}");
             Worksheet worksheet = sheets.Worksheets[sheetNum];
             List<string[]> rows = new List<string[]>();
             Aspose.Cells.Cells cells = worksheet.Cells;

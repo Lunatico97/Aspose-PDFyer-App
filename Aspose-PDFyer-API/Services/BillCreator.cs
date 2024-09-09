@@ -99,59 +99,67 @@ namespace AsposeTriage.Services
             #region header
             _generator.SetBackgroundColor(Color.White);
             _generator.SetForegroundColor(Color.Black);
-            //_generator.CreateWatermark($"{Defaults.ResourceDirectory}/vegetables.png", 0, 0.75);
+            //_generator.CreateWatermark($"{Defaults.ResourceDirectory}/{Defaults.InvoicePath}/{Defaults.ImagePath}/{Defaults.BillLogoFile}", 0, 0.75);
             _generator.CreateHeader(new Header
             {
-                Font = "Times New Roman", Title = "American Rationwala Pvt. Ltd.",
-                FontSize = 20, Top = 75
+                Font = Fonts.VeganStyle,
+                Title = "American Rationwala Pvt. Ltd.",
+                FontSize = 20,
+                Top = 75
             }, FontStyles.Bold);
             _generator.SetForegroundColor(Color.Brown);
             _generator.CreateHeader(new Header
             {
-                Font = "Times New Roman", Title = "Potato - Potata; We got it covered !",
+                Font = Fonts.TimesNewRoman, Title = "Potato - Potata; We got it covered !",
                 FontSize = 12, Top = 20
             }, FontStyles.Italic);
-            _generator.CreateImage(new PDFImage($"{Defaults.ResourceDirectory}/{Defaults.BillLogoFile}", 50, 775, 50, 50));
+            _generator.CreateImage(new PDFImage($"{Defaults.ResourceDirectory}/{Defaults.InvoicePath}/{Defaults.ImagePath}/{Defaults.BillLogoFile}", 50, 775, 50, 50));
             #endregion
 
             #region body
             _generator.SetForegroundColor(Color.Blue);
             _generator.CreateSection(new Textbox(
-                [$"From: Coventry ", "Khandani Suppliers", "☎️ 247-7923781"], "Calibri", 50, 150, 300, 100
+                [$"From: Coventry ", "Khandani Suppliers", "☎️ 247-7923781"], Fonts.Calibri, 50, 150, 300, 100
              ));
             _generator.CreateSection(new Textbox(
-               [$"To: {selectedCity}", "California Distributors", "☎️ 208-1234567"], "Calibri", 400, 150, 300, 100
+               [$"To: {selectedCity}", "California Distributors", "☎️ 208-1234567"], Fonts.Calibri, 400, 150, 300, 100
             ));
             _generator.SetForegroundColor(Color.Black);
             _generator.CreateHeader(new Header
             {
-                Font = "Times New Roman", Title = "INVOICE", FontSize = 16, Top = 20
+                Font = Fonts.TimesNewRoman,
+                Title = "INVOICE",
+                FontSize = 16,
+                Top = 20
             }, FontStyles.Bold);
             _generator.CreateTableFromStringRows(new TableData()
             {
-                PosX = 50, PosY = 50, FontSize = 12, Padding = 5,
+                PosX = 50,
+                PosY = 50,
+                FontSize = 12,
+                Padding = 5,
                 HeaderRows = ["Category", "Product", "Quantity", "Unit Price", "Total Price"],
                 DataRows = tabularData
             }, Color.Transparent, Color.Transparent, false);
-            _generator.CreateTextBox(new Textbox([$"Total: $ {totalSales.ToString("F2")}"], "Calibri", 425, 50, 100, 20, 15), FontStyles.Bold, false);
+            _generator.CreateTextBox(new Textbox([$"Total: $ {totalSales.ToString("F2")}"], Fonts.Calibri, 425, 50, 100, 20, 15), FontStyles.Bold, false);
             _generator.SetForegroundColor(Color.Red);
-            _generator.CreateTextBox(new Textbox([$"+ VAT: {vatPercent}%"], "Calibri", 450, 5, 100, 20, 15), FontStyles.Bold, true);
+            _generator.CreateTextBox(new Textbox([$"+ VAT: {vatPercent}%"], Fonts.Calibri, 450, 5, 100, 20, 15), FontStyles.Bold, true);
             _generator.SetForegroundColor(Color.Green);
-            _generator.CreateTextBox(new Textbox([$"Grand Total: $ {grandTotal.ToString("F2")}"], "Calibri", 370, 10, 100, 20, 16), FontStyles.Bold, false);
+            _generator.CreateTextBox(new Textbox([$"Grand Total: $ {grandTotal.ToString("F2")}"], Fonts.Calibri, 370, 10, 100, 20, 16), FontStyles.Bold, false);
             #endregion
 
             #region footer
             _generator.SetForegroundColor(Color.Black);
-            _generator.CreateImage(new PDFImage("Input/signature.png", 50, 200, 100, 50));
+            _generator.CreateImage(new PDFImage($"{Defaults.ResourceDirectory}/{Defaults.InvoicePath}/{Defaults.ImagePath}/{Defaults.SignatureImageFile}", 50, 200, 100, 50));
             _generator.CreateSection(new Textbox(
-               [$"Chota Chetan", "Certified Vendor", "chetan@amv.com"], "Calibri", 50, 700, 300, 100
+               [$"Chota Chetan", "Certified Vendor", "chetan@amv.com"], Fonts.Calibri, 50, 700, 300, 100
             ));
             _generator.CreateTextBox(new Textbox(
-               [$"Date Issued: {DateTime.Now.Date.ToString("yyyy-MM-dd")}"], "Calibri", 400, 0, 300, 100
+               [$"Date Issued: {DateTime.Now.Date.ToString("yyyy-MM-dd")}"], Fonts.Calibri, 400, 0, 300, 100
             ), FontStyles.Bold);
             _generator.CreateFooter(new Footer
             {
-                Font = "Times New Roman",
+                Font = Fonts.TimesNewRoman,
                 Text = "Please kindly pay your amount before 30 days of issue to avoid penalty !",
                 Link = "https://paypal.com"
             });

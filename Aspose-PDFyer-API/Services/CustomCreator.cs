@@ -1,4 +1,5 @@
 ﻿using Aspose.Pdf.Text;
+using Aspose.Words.Fonts;
 using AsposeTriage.Common;
 using AsposeTriage.Models;
 using AsposeTriage.Structures;
@@ -42,7 +43,7 @@ namespace AsposeTriage.Services
             _generator.SetForegroundColor(Color.Black);
             _generator.CreateHeader(new Header
             {
-                Font = "Times New Roman",
+                Font = Fonts.TimesNewRoman,
                 Title = _customData.Title,
                 FontSize = 20,
                 Top = 75
@@ -67,7 +68,7 @@ namespace AsposeTriage.Services
             _generator.SetForegroundColor(Color.Black);
             _generator.CreateFooter(new Footer
             {
-                Font = "Times New Roman",
+                Font = Fonts.TimesNewRoman,
                 Text = _customData.Footer
             });
             #endregion

@@ -30,9 +30,16 @@
 	  <Content Include="Output\**\*">
 		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 	  </Content>
-	  <Content Include="Input\**\*">
+	  <Content Include="Assets\**\*">
 		  <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
 	  </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Fonts\Calibri.ttf" />
+    <None Remove="Assets\Fonts\Times New Roman.ttf" />
+    <None Remove="Assets\Fonts\Vegan Style.ttf" />
+    <None Remove="Assets\Invoice\Data\foodsales.xlsx" />
   </ItemGroup>
 
 </Project>

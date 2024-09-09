@@ -1,6 +1,8 @@
 ﻿using Aspose.Pdf;
 using Aspose.Pdf.Text;
 using AsposeTriage.Structures;
+using AsposeTriage.Common;
+using System.Reflection.PortableExecutable;
 
 namespace AsposeTriage.Services
 {
@@ -8,6 +10,7 @@ namespace AsposeTriage.Services
     {
         private readonly Document _document;
         private readonly Page _page;
+        private readonly string _fontPath;
         private Color _foregroundColor = Color.Black;
         private bool disposedValue;
 
@@ -18,12 +21,13 @@ namespace AsposeTriage.Services
             _page.SetPageSize(PageSize.A4.Width, PageSize.A4.Height);
             _page.PageInfo.Margin = new MarginInfo { Top = 0, Bottom = 0, Left = 0, Right = 0 };
             _page.Background = Color.White;
+            _fontPath = Path.Combine(Directory.GetCurrentDirectory(), Defaults.ResourceDirectory, Defaults.FontPath);
         }
 
         public void CreateHeader(Header iheader, FontStyles style = FontStyles.Regular)
         {
             TextFragment header = new TextFragment();
-            header.TextState.Font = FontRepository.FindFont(iheader.Font);
+            header.TextState.Font = FontRepository.OpenFont(Path.Combine(_fontPath, iheader.Font));
             header.TextState.FontSize = iheader.FontSize;
             header.TextState.FontStyle = style;
             header.Margin.Top = iheader.Top;
@@ -35,7 +39,7 @@ namespace AsposeTriage.Services
 
         public void CreateImage(PDFImage inputImage)
         {
-            using var stream = System.IO.File.OpenRead(inputImage.Filename);
+            using var stream = File.OpenRead(inputImage.Filename);
             {
                 _page.AddImage(stream, new Rectangle(inputImage.PosX, inputImage.PosY - inputImage.Height,
                                                      inputImage.PosX + inputImage.Width, inputImage.PosY));
@@ -49,7 +53,7 @@ namespace AsposeTriage.Services
             fragment.TextState.FontSize = textbox.FontSize;
             fragment.TextState.Underline = underlined;
             fragment.TextState.ForegroundColor = _foregroundColor;
-            fragment.TextState.Font = FontRepository.FindFont(textbox.Font);
+            fragment.TextState.Font = FontRepository.OpenFont(Path.Combine(_fontPath, textbox.Font));
             fragment.TextState.FontStyle = style;
             fragment.Margin = new MarginInfo();
             fragment.Margin.Top = textbox.PosY;
@@ -64,7 +68,7 @@ namespace AsposeTriage.Services
             //table.ColumnWidths = $"{textbox.Width/2} {textbox.Width/2}"; 
             table.ColumnWidths = $"{textbox.Width}";
             TextState textState = new TextState();
-            textState.Font = FontRepository.FindFont(textbox.Font);
+            textState.Font = FontRepository.OpenFont(Path.Combine(_fontPath, textbox.Font));
             textState.ForegroundColor = _foregroundColor;
             textState.FontSize = 14;
             foreach(string text in textbox.TextList)
@@ -83,7 +87,7 @@ namespace AsposeTriage.Services
             var content = new TextFragment(ifooter.Text);
             var length = content.TextState.MeasureString(content.Text);
             content.Position = new Position((_page.PageInfo.Width / 2) - (length / 2), ifooter.Bottom);
-            content.TextState.Font = FontRepository.FindFont(ifooter.Font);
+            content.TextState.Font = FontRepository.OpenFont(Path.Combine(_fontPath, ifooter.Font));
             content.TextState.FontSize = ifooter.FontSize;
             content.TextState.ForegroundColor = _foregroundColor;
             if (ifooter.Link != string.Empty)
