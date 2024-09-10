@@ -41,16 +41,26 @@ namespace AsposeTriage.Services
                 ArgumentNullException.ThrowIfNull(Messages.FileRequired);
                 return false;
             }
+            return await this.LoadStreamInS3(file.OpenReadStream(), file.FileName, Path.GetExtension(file.FileName), file.ContentType);
+        }
+
+        public async Task<bool> LoadStreamInS3(Stream stream, string key, string extension, string contentType)
+        {
+            if (stream == null)
+            {
+                ArgumentNullException.ThrowIfNull(Messages.FileRequired);
+                return false;
+            }
             var putObjectRequest = new PutObjectRequest()
             {
                 BucketName = _configuration["S3:BucketName"],
                 Key = $"{Defaults.UploadDirectory}/{key}",
-                InputStream = file.OpenReadStream(),
-                ContentType = file.ContentType,
+                InputStream = stream,
+                ContentType = contentType,
                 Metadata =
                   {
-                      ["x-amz-meta-original-file-name"] = file.FileName,
-                      ["x-amz-meta-original-file-extension"] = Path.GetExtension(file.FileName),
+                      ["x-amz-meta-original-file-name"] = key,
+                      ["x-amz-meta-original-file-extension"] = extension,
                   }
             };
             var response = await _amazonS3Client.PutObjectAsync(putObjectRequest);

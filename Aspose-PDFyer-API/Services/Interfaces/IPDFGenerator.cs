@@ -17,7 +17,7 @@ namespace AsposeTriage.Services.Interfaces
         public void SetForegroundColor(Color color);
         public double GetPageWidth();
         public double GetPageHeight();
-        public void GeneratePDF(string filename);
+        public void GeneratePDF(string outFilename);
         public void Dispose();
     }
 }
