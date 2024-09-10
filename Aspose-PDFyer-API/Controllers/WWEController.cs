@@ -11,9 +11,9 @@ namespace AsposeTriage.Controllers
     public class WWEController : Controller
     {
         private readonly WWECreator _wweCreator;
-        public WWEController(IPDFGenerator generator) 
+        public WWEController(IPDFGenerator generator, IS3Service s3Service) 
         { 
-            _wweCreator = new WWECreator(generator);
+            _wweCreator = new WWECreator(generator, s3Service, false);
         }
 
         [HttpPost]
@@ -32,7 +32,7 @@ namespace AsposeTriage.Controllers
 
         [HttpPost]
         [Route(Routes.GenerateMatchCard)]
-        public ActionResult Post(string wrestler1, string wrestler2)
+        public async Task<ActionResult> Post(string wrestler1, string wrestler2)
         {
             if (wrestler1 == null || wrestler2 == null)
             {
@@ -43,7 +43,7 @@ namespace AsposeTriage.Controllers
                 _wweCreator.CreateRoster();
                 _wweCreator.CreateMatchCard(wrestler1, wrestler2);
                 _wweCreator.RenderCard();
-                var filename = _wweCreator.GenerateCard();
+                var filename = await _wweCreator.GenerateCard();
                 return Json(new { success = true, message = Messages.MatchCardGenerated, downloadFilename = filename });
             }
             catch (Exception ex)

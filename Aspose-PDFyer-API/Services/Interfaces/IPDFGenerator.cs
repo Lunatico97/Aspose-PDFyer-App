@@ -18,6 +18,7 @@ namespace AsposeTriage.Services.Interfaces
         public double GetPageWidth();
         public double GetPageHeight();
         public void GeneratePDF(string outFilename);
+        public Stream GeneratePDFStream();
         public void Dispose();
     }
 }

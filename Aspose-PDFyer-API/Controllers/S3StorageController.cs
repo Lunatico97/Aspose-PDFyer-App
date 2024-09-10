@@ -38,7 +38,7 @@ namespace AsposeTriage.Controllers
         {
             try
             {
-                var outputStream = await _s3Service.GetFileFromS3(fileName);
+                var outputStream = await _s3Service.GetFileFromS3(Defaults.DispatchDirectory, fileName);
                 return File(outputStream.Item1, outputStream.Item2, fileName);
             }
             catch (Exception ex)

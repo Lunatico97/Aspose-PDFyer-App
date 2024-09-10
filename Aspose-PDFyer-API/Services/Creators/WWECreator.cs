@@ -10,15 +10,19 @@ namespace AsposeTriage.Services.Creators
     public class WWECreator
     {
         private readonly IPDFGenerator _generator;
+        private readonly IS3Service _s3Service;
+        private readonly bool _saveLocal;
         private List<Wrestler> _wrestlers = new List<Wrestler>();
         private Wrestler? _selectedWrestler1, _selectedWrestler2;
         private List<string[]> tabularData = new List<string[]>();
         private readonly string _wweImagesPath = $"{Defaults.ResourceDirectory}/{Defaults.WWEPath}/{Defaults.ImagePath}";
         private readonly string _wweDataPath = $"{Defaults.ResourceDirectory}/{Defaults.WWEPath}/{Defaults.DataPath}";
 
-        public WWECreator(IPDFGenerator generator)
+        public WWECreator(IPDFGenerator generator, IS3Service s3Service, bool saveLocal = true)
         {
             _generator = generator;
+            _s3Service = s3Service;
+            _saveLocal = saveLocal;
         }
 
         public List<Wrestler> GetRosterData()
@@ -112,11 +116,16 @@ namespace AsposeTriage.Services.Creators
             });
         }
 
-        public string? GenerateCard()
+        public async Task<string?> GenerateCard()
         {
             if (_selectedWrestler1 == null || _selectedWrestler2 == null) return null;
             var filename = $"{_selectedWrestler1.Name} vs {_selectedWrestler2.Name}.pdf";
-            _generator.GeneratePDF($"{Defaults.DispatchDirectory}/{filename}");
+            if (!_saveLocal)
+            {
+                Stream stream = _generator.GeneratePDFStream();
+                await _s3Service.LoadStreamInS3(stream, filename, Path.GetExtension(filename), MimeTypes.PDF);
+            }
+            else _generator.GeneratePDF($"{Defaults.DispatchDirectory}/{filename}");
             _generator.Dispose();
             return filename;
         }

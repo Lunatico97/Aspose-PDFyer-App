@@ -13,6 +13,8 @@ namespace AsposeTriage.Services.Creators
     public class BillCreator
     {
         private readonly IPDFGenerator _generator;
+        private readonly IS3Service _s3Service;
+        private readonly bool _saveLocal;
         private string? selectedCity;
         private double totalSales = 0;
         private readonly int vatPercent = 13;
@@ -20,15 +22,24 @@ namespace AsposeTriage.Services.Creators
         private List<string> _cities = new List<string>();
         List<string[]> tabularData = new List<string[]>();
         private readonly string[] requiredHeaders = { "ID", "Date", "Region", "City", "Category", "Product", "Quantity", "UnitPrice", "TotalPrice" };
-        public BillCreator(IPDFGenerator generator)
+        
+        public BillCreator(IPDFGenerator generator, IS3Service s3Service, bool saveLocal = true)
         {
             _generator = generator;
+            _s3Service = s3Service;
+            _saveLocal = saveLocal;
         }
 
-        public List<Sales> GetSalesData(string dataFileName)
+        public async Task<List<Sales>> GetSalesData(string dataFileName)
         {
             List<Sales> _allSales = new List<Sales>();
-            Workbook sheets = new Workbook($"{Defaults.UploadDirectory}/{dataFileName}");
+            Workbook sheets;
+            if (!_saveLocal)
+            {
+                var output = await _s3Service.GetFileFromS3(Defaults.UploadDirectory, dataFileName);
+                sheets = new Workbook(output.Item1);
+            }
+            else sheets = new Workbook($"{Defaults.UploadDirectory}/{dataFileName}");
             Worksheet worksheet = sheets.Worksheets[0];
             Aspose.Cells.Cells cells = worksheet.Cells;
             for (int row = 1; row <= cells.MaxDataRow; row++)
@@ -59,18 +70,24 @@ namespace AsposeTriage.Services.Creators
             return $"[{formattedList}]";
         }
 
-        public bool CheckIfHeadersMatch(string filename)
+        public async Task<bool> CheckIfHeadersMatch(string filename)
         {
-            List<string> headers = SheetManipulator.GetHeadersFromExcel(filename, 0);
+            List<string> headers;
+            if (!_saveLocal) 
+            {
+                var output = await _s3Service.GetFileFromS3(Defaults.UploadDirectory, filename);
+                headers = SheetManipulator.GetHeadersFromExcelS3(output.Item1, 0);
+            } 
+            else headers = SheetManipulator.GetHeadersFromExcel(filename, 0);
             var headerSet = new HashSet<string>(headers);
             var requiredSet = new HashSet<string>(requiredHeaders);
             return requiredSet.SetEquals(headerSet);
         }
 
-        public void CreateBill(string filename, string location)
+        public async Task CreateBill(string filename, string location)
         {
             List<Sales> _filteredSales;
-            List<Sales> sales = GetSalesData(filename);
+            List<Sales> sales = await GetSalesData(filename);
             selectedCity = _cities.Find(c => c.Equals(location, StringComparison.OrdinalIgnoreCase));
             if (selectedCity == null) throw new Exception(Messages.LocationNotAssociatedToSupplier);
             _filteredSales = sales.Where(s => s.City.Equals(location, StringComparison.OrdinalIgnoreCase))
@@ -169,7 +186,7 @@ namespace AsposeTriage.Services.Creators
             #endregion
         }
 
-        public void GenerateComparisonChecks(List<string[]> checks)
+        public async Task GenerateComparisonChecks(List<string[]> checks)
         {
             _generator.CreateTableFromStringRows(new TableData()
             {
@@ -181,13 +198,35 @@ namespace AsposeTriage.Services.Creators
                 DataRows = checks,
                 ColumnWidths = "100 400"
             }, Color.Transparent, Color.Transparent, true);
-            _generator.GeneratePDF($"{Defaults.DispatchDirectory}/{Defaults.CustomCheckPDFFile}");
+            if(!_saveLocal)
+            {
+                Stream stream = _generator.GeneratePDFStream();
+                await _s3Service.LoadStreamInS3(stream, Defaults.CustomCheckPDFFile, Path.GetExtension(Defaults.CustomCheckPDFFile), MimeTypes.PDF);
+            }
+            else _generator.GeneratePDF($"{Defaults.DispatchDirectory}/{Defaults.CustomCheckPDFFile}");
             _generator.Dispose();
         }
 
-        public void GenerateBill()
+        public async Task GenerateAsposeChecks(Stream compareStream)
         {
-            _generator.GeneratePDF($"{Defaults.DispatchDirectory}/{selectedCity}_{DateTime.Now.Date.ToString("yyyy-MM-dd")}.pdf");
+            if (!_saveLocal)
+            {
+                Stream stream = _generator.GeneratePDFStream();
+                await _s3Service.LoadStreamInS3(stream, Defaults.AsposeCheckPDFFile, Path.GetExtension(Defaults.AsposeCheckPDFFile), MimeTypes.PDF);
+            }
+            else _generator.GeneratePDF($"{Defaults.DispatchDirectory}/{Defaults.AsposeCheckPDFFile}");
+            _generator.Dispose();
+        }
+
+        public async Task GenerateBill()
+        {
+            var filename = $"{selectedCity}_{DateTime.Now.Date.ToString("yyyy-MM-dd")}.pdf";
+            if (!_saveLocal)
+            {
+                Stream stream = _generator.GeneratePDFStream();
+                await _s3Service.LoadStreamInS3(stream, filename, Path.GetExtension(filename), MimeTypes.PDF);
+            }
+            else _generator.GeneratePDF($"{Defaults.DispatchDirectory}/{filename}");
             _generator.Dispose();
         }
     }

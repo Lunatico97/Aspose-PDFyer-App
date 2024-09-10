@@ -4,6 +4,7 @@ using AsposeTriage.Structures;
 using AsposeTriage.Common;
 using System.Reflection.PortableExecutable;
 using AsposeTriage.Services.Interfaces;
+using Amazon.S3.Model;
 
 namespace AsposeTriage.Services
 {
@@ -175,6 +176,13 @@ namespace AsposeTriage.Services
         public void GeneratePDF(string outFilename)
         {
             _document.Save(outFilename);
+        }
+
+        public Stream GeneratePDFStream()
+        {
+            Stream stream = new MemoryStream();
+            _document.Save(stream, SaveFormat.Pdf);
+            return stream;
         }
 
         protected virtual void Dispose(bool disposing)

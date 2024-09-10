@@ -29,7 +29,7 @@ namespace AsposeTriage.Utilities
             return checks;
         }
 
-        public static void CompareAspose(IFormFile file1, IFormFile file2)
+        public static Stream CompareAspose(IFormFile file1, IFormFile file2, bool saveLocal=true)
         {
             Document docA = new Document(file1.OpenReadStream());
             Document docB = new Document(file2.OpenReadStream());
@@ -39,7 +39,9 @@ namespace AsposeTriage.Utilities
             docB.AcceptAllRevisions();
 
             docA.Compare(docB, "Diwas Adhikari", DateTime.Now);
-            docA.Save($"Output/AsposeChecks.pdf");
+            Stream compareStream = new MemoryStream();
+            docA.Save(compareStream, SaveFormat.Pdf);
+            return compareStream;
         }
 
         public static byte[] MergeDocuments(IFormFile[] files)

@@ -11,13 +11,13 @@ namespace AsposeTriage.Controllers
     public class BillController : Controller
     {
         private readonly BillCreator _billCreator;
-        public BillController(IPDFGenerator generator) {
-            _billCreator = new BillCreator(generator);
+        public BillController(IPDFGenerator generator, IS3Service s3Service) {
+            _billCreator = new BillCreator(generator, s3Service, false);
         }
 
         [HttpPost]
         [Route(Routes.GenerateBill)]
-        public ActionResult Post(string dataFilename, string location)
+        public async Task<ActionResult> Post(string dataFilename, string location)
         {
             if(location == null)
             {
@@ -25,11 +25,11 @@ namespace AsposeTriage.Controllers
             }
             try
             {
-                if (_billCreator.CheckIfHeadersMatch(dataFilename))
+                if (await _billCreator.CheckIfHeadersMatch(dataFilename))
                 {
-                    _billCreator.CreateBill(dataFilename, location);
+                    await _billCreator.CreateBill(dataFilename, location);
                     _billCreator.RenderBill();
-                    _billCreator.GenerateBill();
+                    await _billCreator.GenerateBill();
                 }
                 else return Json(new { success = false, message = $"{Messages.FileWithInvalidHeaderFormat} \n Format: {_billCreator.DisplayRequiredHeaders()}" });
             }
@@ -42,14 +42,14 @@ namespace AsposeTriage.Controllers
 
         [HttpGet]
         [Route(Routes.GetSalesData)]
-        public ActionResult Get(string dataFilename)
+        public async Task<ActionResult> Get(string dataFilename)
         {
-            return Json(_billCreator.GetSalesData(dataFilename));
+            return Json(await _billCreator.GetSalesData(dataFilename));
         }
 
         [HttpPost]
         [Route(Routes.ComparePDFCustom)]
-        public ActionResult ComparePDFs(IFormFile pdf1, IFormFile pdf2)
+        public async Task<ActionResult> ComparePDFs(IFormFile pdf1, IFormFile pdf2)
         {
             if (pdf1 == null || pdf2 == null)
             {
@@ -58,7 +58,7 @@ namespace AsposeTriage.Controllers
             try
             {
                 List<string[]> checks = DocumentComparator.CompareCustom(pdf1, pdf2);
-                _billCreator.GenerateComparisonChecks(checks);
+                await _billCreator.GenerateComparisonChecks(checks);
                 return Json(new { success = true, message = Messages.CustomComparisonSuccess, downloadFilename = Defaults.CustomCheckPDFFile});
             }
             catch (Exception ex)
@@ -69,7 +69,7 @@ namespace AsposeTriage.Controllers
 
         [HttpPost]
         [Route(Routes.ComparePDFAspose)]
-        public ActionResult ComparePDFsAspose(IFormFile pdf1, IFormFile pdf2)
+        public async Task<ActionResult> ComparePDFsAspose(IFormFile pdf1, IFormFile pdf2)
         {
             if (pdf1 == null || pdf2 == null)
             {
@@ -77,7 +77,8 @@ namespace AsposeTriage.Controllers
             }
             try
             {
-                DocumentComparator.CompareAspose(pdf1, pdf2);
+                Stream stream = DocumentComparator.CompareAspose(pdf1, pdf2);
+                await _billCreator.GenerateAsposeChecks(stream);
                 return Json(new { success = true, message = Messages.AsposeComparisonSuccess, downloadFilename = Defaults.AsposeCheckPDFFile});
             }
             catch (Exception ex)

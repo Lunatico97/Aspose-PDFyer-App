@@ -12,9 +12,9 @@ namespace AsposeTriage.Controllers
     public class CustomController : Controller
     {
         private readonly CustomCreator _customCreator;
-        public CustomController(IPDFGenerator generator)
+        public CustomController(IPDFGenerator generator, IS3Service s3Service)
         {
-            _customCreator = new CustomCreator(generator);
+            _customCreator = new CustomCreator(generator, s3Service, false);
         }
 
         [HttpGet]
@@ -37,7 +37,7 @@ namespace AsposeTriage.Controllers
 
         [HttpPost]
         [Route(Routes.GeneratePDFCustom)]
-        public ActionResult Post(CustomDAO custom)
+        public async Task<ActionResult> Post(CustomDAO custom)
         {
             if (custom == null)
             {
@@ -45,9 +45,9 @@ namespace AsposeTriage.Controllers
             }
             try
             { 
-                _customCreator.CreateCustom(custom);
+                await _customCreator.CreateCustom(custom);
                 _customCreator.RenderCustom();
-                _customCreator.GenerateCustom();
+                await _customCreator.GenerateCustom();
 
             }
             catch (Exception ex)

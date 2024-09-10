@@ -19,12 +19,12 @@ namespace AsposeTriage.Services
             _amazonS3Client = new AmazonS3Client(credentials, Amazon.RegionEndpoint.USEast1);
         }
 
-        public async Task<Tuple<Stream, string>> GetFileFromS3(string key)
+        public async Task<Tuple<Stream, string>> GetFileFromS3(string directory, string key)
         {
             var request = new GetObjectRequest()
             {
                 BucketName = _configuration["S3:BucketName"],
-                Key = $"{Defaults.DispatchDirectory}/{key}",
+                Key = $"{directory}/{key}",
             };
             var response = await _amazonS3Client.GetObjectAsync(request);
             if (response.HttpStatusCode == HttpStatusCode.OK)
