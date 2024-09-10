@@ -34,17 +34,17 @@ namespace AsposeTriage.Services
             return null ;
         }
 
-        public async Task<bool> PutFileInS3(IFormFile file, string key, string contentType)
+        public async Task<bool> PutFileInS3(IFormFile file, string directory)
         {
             if(file == null)
             {
                 ArgumentNullException.ThrowIfNull(Messages.FileRequired);
                 return false;
             }
-            return await this.LoadStreamInS3(file.OpenReadStream(), file.FileName, Path.GetExtension(file.FileName), file.ContentType);
+            return await this.LoadStreamInS3(file.OpenReadStream(), directory, file.FileName, Path.GetExtension(file.FileName), file.ContentType);
         }
 
-        public async Task<bool> LoadStreamInS3(Stream stream, string key, string extension, string contentType)
+        public async Task<bool> LoadStreamInS3(Stream stream, string directory, string key, string extension, string contentType)
         {
             if (stream == null)
             {
@@ -54,7 +54,7 @@ namespace AsposeTriage.Services
             var putObjectRequest = new PutObjectRequest()
             {
                 BucketName = _configuration["S3:BucketName"],
-                Key = $"{Defaults.UploadDirectory}/{key}",
+                Key = $"{directory}/{key}",
                 InputStream = stream,
                 ContentType = contentType,
                 Metadata =

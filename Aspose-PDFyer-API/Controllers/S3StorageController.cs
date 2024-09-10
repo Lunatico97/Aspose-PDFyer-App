@@ -24,7 +24,7 @@ namespace AsposeTriage.Controllers
             }
             try
             {
-                var succeeded = await _s3Service.PutFileInS3(dataFile, dataFile.FileName, dataFile.ContentType);
+                var succeeded = await _s3Service.PutFileInS3(dataFile, Defaults.UploadDirectory);
                 return Json(new { success = succeeded, message = $"{Messages.FileUploadSuccess} [{dataFile.FileName}]" });
             }
             catch (Exception ex)

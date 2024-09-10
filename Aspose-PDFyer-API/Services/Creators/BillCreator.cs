@@ -201,7 +201,7 @@ namespace AsposeTriage.Services.Creators
             if(!_saveLocal)
             {
                 Stream stream = _generator.GeneratePDFStream();
-                await _s3Service.LoadStreamInS3(stream, Defaults.CustomCheckPDFFile, Path.GetExtension(Defaults.CustomCheckPDFFile), MimeTypes.PDF);
+                await _s3Service.LoadStreamInS3(stream, Defaults.DispatchDirectory, Defaults.CustomCheckPDFFile, Path.GetExtension(Defaults.CustomCheckPDFFile), MimeTypes.PDF);
             }
             else _generator.GeneratePDF($"{Defaults.DispatchDirectory}/{Defaults.CustomCheckPDFFile}");
             _generator.Dispose();
@@ -212,7 +212,7 @@ namespace AsposeTriage.Services.Creators
             if (!_saveLocal)
             {
                 Stream stream = _generator.GeneratePDFStream();
-                await _s3Service.LoadStreamInS3(stream, Defaults.AsposeCheckPDFFile, Path.GetExtension(Defaults.AsposeCheckPDFFile), MimeTypes.PDF);
+                await _s3Service.LoadStreamInS3(stream, Defaults.DispatchDirectory, Defaults.AsposeCheckPDFFile, Path.GetExtension(Defaults.AsposeCheckPDFFile), MimeTypes.PDF);
             }
             else _generator.GeneratePDF($"{Defaults.DispatchDirectory}/{Defaults.AsposeCheckPDFFile}");
             _generator.Dispose();
@@ -224,7 +224,7 @@ namespace AsposeTriage.Services.Creators
             if (!_saveLocal)
             {
                 Stream stream = _generator.GeneratePDFStream();
-                await _s3Service.LoadStreamInS3(stream, filename, Path.GetExtension(filename), MimeTypes.PDF);
+                await _s3Service.LoadStreamInS3(stream, Defaults.DispatchDirectory, filename, Path.GetExtension(filename), MimeTypes.PDF);
             }
             else _generator.GeneratePDF($"{Defaults.DispatchDirectory}/{filename}");
             _generator.Dispose();
