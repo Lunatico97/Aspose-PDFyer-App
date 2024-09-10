@@ -211,10 +211,16 @@ namespace AsposeTriage.Services.Creators
         {
             if (!_saveLocal)
             {
-                Stream stream = _generator.GeneratePDFStream();
-                await _s3Service.LoadStreamInS3(stream, Defaults.DispatchDirectory, Defaults.AsposeCheckPDFFile, Path.GetExtension(Defaults.AsposeCheckPDFFile), MimeTypes.PDF);
+                await _s3Service.LoadStreamInS3(compareStream, Defaults.DispatchDirectory, Defaults.AsposeCheckPDFFile, Path.GetExtension(Defaults.AsposeCheckPDFFile), MimeTypes.PDF);
             }
-            else _generator.GeneratePDF($"{Defaults.DispatchDirectory}/{Defaults.AsposeCheckPDFFile}");
+            else
+            {
+                using (var fs = File.Create(Path.Combine(Defaults.DispatchDirectory, Defaults.AsposeCheckPDFFile)))
+                {
+                    compareStream.Seek(0, SeekOrigin.Begin);
+                    await compareStream.CopyToAsync(fs);
+                }
+            }
             _generator.Dispose();
         }
 

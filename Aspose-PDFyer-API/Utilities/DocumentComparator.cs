@@ -40,6 +40,7 @@ namespace AsposeTriage.Utilities
 
             docA.Compare(docB, "Diwas Adhikari", DateTime.Now);
             Stream compareStream = new MemoryStream();
+            compareStream.Seek(0, SeekOrigin.Begin);
             docA.Save(compareStream, SaveFormat.Pdf);
             return compareStream;
         }

@@ -108,7 +108,7 @@ namespace AsposeTriage.Utilities
             Workbook sheets = new Workbook(stream);
             Worksheet worksheet = sheets.Worksheets[sheetNum];
             List<string[]> rows = new List<string[]>();
-            Aspose.Cells.Cells cells = worksheet.Cells;
+            Cells cells = worksheet.Cells;
             for (int row = 1; row <= cells.MaxDataRow; row++)
             {
                 List<string> rowData = new List<string>();

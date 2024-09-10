@@ -1,14 +1,10 @@
-﻿using Aspose.Cells.Rendering;
-using Aspose.Cells;
-using Aspose.Pdf.Text;
-using Aspose.Words.Fonts;
+﻿using Aspose.Pdf.Text;
 using AsposeTriage.Common;
 using AsposeTriage.Models;
 using AsposeTriage.Services.Interfaces;
 using AsposeTriage.Structures;
 using AsposeTriage.Utilities;
 using Color = Aspose.Pdf.Color;
-using System.Runtime.CompilerServices;
 
 namespace AsposeTriage.Services.Creators
 {
