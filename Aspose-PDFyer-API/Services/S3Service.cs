@@ -31,7 +31,7 @@ namespace AsposeTriage.Services
             {
                 return new Tuple<Stream, string>(response.ResponseStream, response.Headers.ContentType);
             }
-            return null ;
+            return new Tuple<Stream, string>(Stream.Null, string.Empty); 
         }
 
         public async Task<bool> PutFileInS3(IFormFile file, string directory)
