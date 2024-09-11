@@ -19,7 +19,7 @@ namespace AsposeTriage.Controllers
 
         [HttpGet]
         [Route(Routes.GetCustomDataHeaders)]
-        public ActionResult Get(string filename)
+        public async Task<ActionResult> Get(string filename)
         {
             if(filename == null)
             {
@@ -27,7 +27,7 @@ namespace AsposeTriage.Controllers
             }
             try
             {
-                return Json(SheetManipulator.GetHeadersFromExcel(filename, 0));
+                return Json(await _customCreator.GetCustomDataHeaders(filename));
             }
             catch (Exception ex)
             {

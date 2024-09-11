@@ -56,6 +56,16 @@ namespace AsposeTriage.Services.Creators
             }
         }
 
+        public async Task<List<string>> GetCustomDataHeaders(string filename)
+        {
+            if (!_saveLocal)
+            {
+                var output = await _s3Service.GetFileFromS3(Defaults.UploadDirectory, filename);
+                return SheetManipulator.GetHeadersFromExcelS3(output.Item1, 0);
+            }
+            else return SheetManipulator.GetHeadersFromExcel(filename, 0);
+        }
+
         public void RenderCustom()
         {
             #region header
