@@ -31,6 +31,7 @@ namespace AsposeTriage.Utilities
                 using (MemoryStream outStream = new MemoryStream())
                 {
                     doc.Save(outStream, Aspose.Pdf.SaveFormat.DocX);
+                    outStream.Position = 0;
                     return outStream.ToArray();
                 }
             }
@@ -61,6 +62,7 @@ namespace AsposeTriage.Utilities
                 using (MemoryStream outStream = new MemoryStream())
                 {
                     workbook.Save(outStream, Aspose.Cells.SaveFormat.Docx);
+                    outStream.Position = 0;
                     return outStream.ToArray();
                 }
             }

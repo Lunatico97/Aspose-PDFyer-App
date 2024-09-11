@@ -29,7 +29,7 @@ namespace AsposeTriage.Utilities
             return checks;
         }
 
-        public static Stream CompareAspose(IFormFile file1, IFormFile file2, bool saveLocal=true)
+        public static Stream CompareAspose(IFormFile file1, IFormFile file2, bool saveLocal = true)
         {
             Document docA = new Document(file1.OpenReadStream());
             Document docB = new Document(file2.OpenReadStream());
@@ -47,24 +47,24 @@ namespace AsposeTriage.Utilities
 
         public static byte[] MergeDocuments(IFormFile[] files)
         {
-            try
+            //Aspose.Pdf.Document[] documents = files.Select(file => new Aspose.Pdf.Document(file.OpenReadStream())).ToArray();
+            var documents = files.Select(file =>
             {
-                Aspose.Pdf.Document[] documents = files.Select(file => new Aspose.Pdf.Document(file.OpenReadStream())).ToArray();
-                Aspose.Pdf.Document mergedDocument = new Aspose.Pdf.Document();
-                foreach (var document in documents)
-                {
-                    mergedDocument.Pages.Add(document.Pages);
-                }
-                using (MemoryStream memoryStream = new MemoryStream())
-                {
-                    mergedDocument.Save(memoryStream);
-                    memoryStream.Seek(0, SeekOrigin.Begin);
-                    return memoryStream.ToArray();
-                }
+                Stream memoryStream = new MemoryStream();
+                file.CopyTo(memoryStream);
+                memoryStream.Position = 0;
+                return new Aspose.Pdf.Document(memoryStream);
+            }).ToArray();
+            Aspose.Pdf.Document mergedDocument = new Aspose.Pdf.Document();
+            foreach (var document in documents)
+            {
+                mergedDocument.Pages.Add(document.Pages);
             }
-            catch (Exception exception)
+            using (MemoryStream memoryStream = new MemoryStream())
             {
-                throw new Exception(exception.Message);
+                mergedDocument.Save(memoryStream);
+                memoryStream.Seek(0, SeekOrigin.Begin);
+                return memoryStream.ToArray();
             }
         }
     }
