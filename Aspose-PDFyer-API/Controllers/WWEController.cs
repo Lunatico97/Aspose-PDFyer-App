@@ -56,7 +56,7 @@ namespace AsposeTriage.Controllers
         [Route(Routes.GetWrestlersInfo)]
         public ActionResult Get()
         {
-            return Json(SheetManipulator.GetRowsFromExcel(Defaults.WrestlerDataFile, 1));
+            return Json(_wweCreator.GetRosterData());
         }
     }
 }

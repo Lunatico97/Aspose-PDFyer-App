@@ -2,9 +2,7 @@
 using Aspose.Pdf.Text;
 using AsposeTriage.Structures;
 using AsposeTriage.Common;
-using System.Reflection.PortableExecutable;
 using AsposeTriage.Services.Interfaces;
-using Amazon.S3.Model;
 
 namespace AsposeTriage.Services
 {
@@ -24,6 +22,9 @@ namespace AsposeTriage.Services
             _page.PageInfo.Margin = new MarginInfo { Top = 0, Bottom = 0, Left = 0, Right = 0 };
             _page.Background = Color.White;
             _fontPath = Path.Combine(Directory.GetCurrentDirectory(), Defaults.ResourceDirectory, Defaults.FontPath);
+            FontRepository.Sources.Add(new SystemFontSource());
+            FontRepository.Sources.Add(new FolderFontSource(_fontPath));
+            FontRepository.LoadFonts();
         }
 
         public void CreateHeader(Header iheader, FontStyles style = FontStyles.Regular)
