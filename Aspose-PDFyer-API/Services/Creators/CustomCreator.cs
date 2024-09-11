@@ -40,8 +40,7 @@ namespace AsposeTriage.Services.Creators
                     {
                         headerRow = SheetManipulator.GetHeadersFromExcel(custom.Filename, 0).ToArray();
                         dataRows = SheetManipulator.GetRowsFromExcel(custom.Filename, 0);
-                    }
-                    
+                    }  
                 }
                 else
                 {
