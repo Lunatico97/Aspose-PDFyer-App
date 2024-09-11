@@ -28,7 +28,7 @@ namespace AsposeTriage.Services.Creators
             if (custom != null)
             {
                 _customData = custom;
-                if (custom.Headers.Any())
+                if (!custom.Headers.Any())
                 {
                     if (!_saveLocal)
                     {
